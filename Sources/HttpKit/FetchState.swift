@@ -8,14 +8,14 @@
 import Foundation
 
 /// loading should hold latest success value if possible
-enum FetchState<Value> {
+public enum FetchState<Value> {
   case initial
   case loading(Value)
   case success(Value)
   case failure(RequestError)
 }
 
-extension FetchState {
+public extension FetchState {
   
   var isInitial: Bool {
     switch self {
@@ -88,7 +88,7 @@ extension FetchState {
 }
 
 extension FetchState: Equatable {
-  static func == (lhs: FetchState<Value>, rhs: FetchState<Value>) -> Bool {
+  public static func == (lhs: FetchState<Value>, rhs: FetchState<Value>) -> Bool {
     switch(lhs, rhs) {
     case (.initial, .initial):
       return true

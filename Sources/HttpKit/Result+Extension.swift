@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Result {
+public extension Result {
     
     var isSuccess: Bool {
         switch self {
@@ -36,18 +36,9 @@ extension Result {
         }
     }
     
-//    func getValue() throws -> Success {
-//        switch self {
-//        case .success(let success):
-//            return success
-//        case .failure(let err):
-//            throw err
-//        }
-//    }
-    
 }
 
-extension Result where Failure == RequestError {
+public extension Result where Failure == RequestError {
     func toFetchState() -> FetchState<Success> {
         switch self {
         case .success(let success):
