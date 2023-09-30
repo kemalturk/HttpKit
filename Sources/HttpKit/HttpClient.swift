@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol HTTPClient {
-    func sendPlainRequest(endpoint: HttpEndpoint) async -> Result<Data, RequestError>
-    func sendRequest<T: Decodable>(endpoint: HttpEndpoint) async -> Result<T, RequestError>
+public protocol HTTPClient {
+    func sendPlainRequest(endpoint: Endpoint) async -> Result<Data, RequestError>
+    func sendRequest<T: Decodable>(endpoint: Endpoint) async -> Result<T, RequestError>
     func sendRequest<T: Decodable>(session: HttpSession) async -> Result<T, RequestError>
     
     func handleError<T: Decodable>(_ session: HttpSession) async -> Result<T, RequestError>?
 }
 
-extension HTTPClient {
-    func sendPlainRequest(endpoint: HttpEndpoint) async -> Result<Data, RequestError> {
+public extension HTTPClient {
+    func sendPlainRequest(endpoint: Endpoint) async -> Result<Data, RequestError> {
         let plainRequest = PlainRequest()
         return await withTaskCancellationHandler {
             return await withCheckedContinuation { continuation in
@@ -27,7 +27,7 @@ extension HTTPClient {
         }
     }
     
-    func sendRequest<T: Decodable>(endpoint: HttpEndpoint) async -> Result<T, RequestError> {
+    func sendRequest<T: Decodable>(endpoint: Endpoint) async -> Result<T, RequestError> {
         await sendRequest(session: .init(endpoint: endpoint, refreshToken: true))
     }
     
@@ -58,13 +58,17 @@ extension HTTPClient {
             return await handleError(session) ?? .failure(error)
         }
     }
+    
+    func handleError<T>(_ session: HttpSession) async -> Result<T, RequestError>? where T : Decodable {
+        return nil
+    }
 }
 
 fileprivate class PlainRequest {
     
     private var task: URLSessionTask?
     
-    func start(endpoint: HttpEndpoint, continuation: CheckedContinuation<Result<Data, RequestError>, Never>) {
+    func start(endpoint: Endpoint, continuation: CheckedContinuation<Result<Data, RequestError>, Never>) {
         var urlComponents = URLComponents()
         urlComponents.scheme = endpoint.scheme
         urlComponents.host = endpoint.host
@@ -147,7 +151,7 @@ fileprivate class PlainRequest {
         task?.cancel()
     }
     
-    private class func log(_ url: URL, _ endpoint: HttpEndpoint, _ response: HTTPURLResponse, _ responseRawBody: String) {
+    private class func log(_ url: URL, _ endpoint: Endpoint, _ response: HTTPURLResponse, _ responseRawBody: String) {
         print("*********************")
         print("*** RESPONSE DATA ***")
         print("*********************")

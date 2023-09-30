@@ -9,12 +9,12 @@
 import Foundation
 
 
-class HttpSession {
-    var endpoint: HttpEndpoint
+public class HttpSession {
+    var endpoint: Endpoint
     var error: RequestError?
     var refreshToken: Bool
     
-    init(endpoint: HttpEndpoint, error: RequestError? = nil, refreshToken: Bool) {
+    init(endpoint: Endpoint, error: RequestError? = nil, refreshToken: Bool) {
         self.endpoint = endpoint
         self.error = error
         self.refreshToken = refreshToken

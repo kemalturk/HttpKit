@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RequestError: Error {
+public struct RequestError: Error {
   let statusCode: Int
   let body: String
   

@@ -8,7 +8,7 @@
 import Foundation
 
 
-protocol HttpEndpoint {
+public protocol Endpoint {
   var scheme: String { get }
   var host: String { get }
   var contentType: ContentType { get }
@@ -19,15 +19,17 @@ protocol HttpEndpoint {
   var body: [String: Any]? { get }
   var formData: [FormData]? { get }
   var query: [String: String]? { get }
+    
+  /// This timeout interval is measured in seconds.
   var timeout: TimeInterval { get }
 }
 
-enum FormData {
+public enum FormData {
   case text(key: String, value: String)
   case image(key: String, fileName: String, mimeType: MimeType, data: Data)
 }
 
-enum MimeType: String {
+public enum MimeType: String {
     case jpeg = "image/jpeg"
     case png = "image/png"
 }

@@ -8,9 +8,13 @@
 import Foundation
 
 
-private struct HttpClientWrapper: HTTPClient {}
+private struct HttpClientWrapper: HTTPClient {
+    func handleError<T>(_ session: HttpSession) async -> Result<T, RequestError>? where T : Decodable {
+        return nil
+    }
+}
 
-extension HttpEndpoint {
+extension Endpoint {
   func sendRequest<T: Decodable>() async -> Result<T, RequestError> {
     await HttpClientWrapper().sendRequest(endpoint: self)
   }
