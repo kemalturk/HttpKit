@@ -10,7 +10,7 @@ import Foundation
 /// loading should hold latest success value if possible
 public enum FetchState<Value> {
   case initial
-  case loading(Value)
+  case loading
   case success(Value)
   case failure(RequestError)
 }
@@ -55,8 +55,6 @@ public extension FetchState {
   
   var value: Value? {
     switch self {
-    case .loading(let val):
-      return val
     case .success(let val):
       return val
     default:
@@ -73,18 +71,6 @@ public extension FetchState {
     }
   }
   
-  /// Swiches the current state to loading, but no effect on initial state
-  func switchToLoading() -> FetchState<Value> {
-    switch self {
-    case .initial, .failure:
-      return .initial
-    case .loading(let value):
-      return .loading(value)
-    case .success(let value):
-      return .loading(value)
-    }
-  }
-  
 }
 
 extension FetchState: Equatable {
@@ -92,7 +78,7 @@ extension FetchState: Equatable {
     switch(lhs, rhs) {
     case (.initial, .initial):
       return true
-    case (.loading(_), .loading(_)):
+    case (.loading, .loading):
       return true
     case (.success(_), .success(_)):
       return true
