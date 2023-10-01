@@ -4,7 +4,7 @@
 
 # HttpKit
 
-A lightweight, zero dependency Http Client and Network Abstraction Layer.
+HttpKit is a Swift library for handling HTTP requests. It provides a convenient way to interact with HTTP endpoints and perform common HTTP operations. 
 
 ## Installation
 
