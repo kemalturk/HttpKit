@@ -14,7 +14,7 @@ private struct HttpClientWrapper: HTTPClient {
     }
 }
 
-extension Endpoint {
+public extension Endpoint {
   func sendRequest<T: Decodable>() async -> Result<T, RequestError> {
     await HttpClientWrapper().sendRequest(endpoint: self)
   }
