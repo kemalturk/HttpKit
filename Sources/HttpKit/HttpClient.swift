@@ -104,6 +104,8 @@ fileprivate class PlainRequest {
             } else {
                 request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
             }
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
         }
         
         if endpoint.method != .get, let formData = endpoint.formData {
