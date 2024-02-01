@@ -8,34 +8,34 @@
 import Foundation
 
 public struct RequestError: Error {
-  let statusCode: Int
-  let body: String
+  public let statusCode: Int
+  public let body: String
   
-  static var invalidURL: RequestError {
+  public static var invalidURL: RequestError {
     .init(statusCode: -1, body: "Invalid Url")
   }
   
-  static var noData: RequestError {
+  public static var noData: RequestError {
     .init(statusCode: -1, body: "No Data")
   }
   
-  static var unknown: RequestError {
+  public static var unknown: RequestError {
     .init(statusCode: -1, body: "Unknown Error")
   }
   
-  static var noResponse: RequestError {
+  public static var noResponse: RequestError {
     .init(statusCode: -1, body: "No Response")
   }
   
-  static var decode: RequestError {
+  public static var decode: RequestError {
     .init(statusCode: -1, body: "Decode Error")
   }
   
-  static func unknown(_ err: Error) -> RequestError {
+  public static func unknown(_ err: Error) -> RequestError {
     .init(statusCode: -1, body: err.localizedDescription)
   }
   
-  var message: String {
+  public var message: String {
     return body
   }
 }
