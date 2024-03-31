@@ -43,12 +43,3 @@ extension FormDataEncodable {
         return []
     }
 }
-
-extension Encodable {
-    func toDict() -> [String: Any]? {
-        if let encoded = try? JSONEncoder().encode(self) {
-            return try? JSONSerialization.jsonObject(with: encoded) as? [String: Any]
-        }
-        return nil
-    }
-}
