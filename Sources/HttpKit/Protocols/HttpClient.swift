@@ -28,7 +28,7 @@ public extension HTTPClient {
     }
     
     func sendRequest<T: Decodable>(endpoint: Endpoint) async -> Result<T, RequestError> {
-        await sendRequest(session: .init(endpoint: endpoint, refreshToken: true))
+        await sendRequest(session: .init(endpoint: endpoint))
     }
     
     func sendRequest<T: Decodable>(session: HttpSession) async -> Result<T, RequestError> {
