@@ -8,12 +8,12 @@
 import Foundation
 
 
-protocol FormDataEncodable: Encodable {
+public protocol FormDataEncodable: Encodable {
     func toFormData() -> [FormData]
 }
 
 extension FormDataEncodable {
-    func toFormData() -> [FormData] {
+    public func toFormData() -> [FormData] {
         if let dict = self.toDict() {
             var body = [FormData]()
             dict.keys.forEach { (key) in
