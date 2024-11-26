@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct AnyResponseModel: Decodable {
+public struct AnyResponseModel: Decodable {
   let data: String?
 }
