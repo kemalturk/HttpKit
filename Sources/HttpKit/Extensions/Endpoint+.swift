@@ -9,6 +9,7 @@ import Foundation
 
 
 public extension Endpoint {
+    var url: URL? { nil }
     var scheme: String { "https" }
     var contentType: ContentType { .json }
     var middlePath: String { "" }

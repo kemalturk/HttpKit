@@ -69,31 +69,37 @@ fileprivate class PlainRequest {
     private var task: URLSessionTask?
     
     func start(endpoint: Endpoint, continuation: CheckedContinuation<Result<Data, RequestError>, Never>) {
-        var urlComponents = URLComponents()
-        urlComponents.scheme = endpoint.scheme
-        urlComponents.host = endpoint.host
-        urlComponents.path = endpoint.middlePath + endpoint.path
+        var url = endpoint.url
         
-        if endpoint.host.contains(":") {
-            let parts = endpoint.host.split(separator: ":").map { String($0) }
-            urlComponents.host = parts.first
-            urlComponents.port = Int(parts.last ?? "")
-        }
-        
-        if let query = endpoint.query {
-            urlComponents.queryItems = query.map({(key, val) in
-                URLQueryItem(name: key, value: val)
-            })
-        }
-        
-        guard let url = urlComponents.url else {
-            return continuation.resume(returning: .failure(.invalidURL))
+        if url == nil {
+            var urlComponents = URLComponents()
+            urlComponents.scheme = endpoint.scheme
+            urlComponents.host = endpoint.host
+            urlComponents.path = endpoint.middlePath + endpoint.path
+            
+            if endpoint.host.contains(":") {
+                let parts = endpoint.host.split(separator: ":").map { String($0) }
+                urlComponents.host = parts.first
+                urlComponents.port = Int(parts.last ?? "")
+            }
+            
+            if let query = endpoint.query {
+                urlComponents.queryItems = query.map({(key, val) in
+                    URLQueryItem(name: key, value: val)
+                })
+            }
+            
+            guard let _url = urlComponents.url else {
+                return continuation.resume(returning: .failure(.invalidURL))
+            }
+            
+            url = _url
         }
         
         var header = endpoint.header
         header?["Content-Type"] = endpoint.contentType.rawValue
         
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url!)
         request.httpMethod = endpoint.method.rawValue
         request.allHTTPHeaderFields = header
         request.timeoutInterval = endpoint.timeout
@@ -133,7 +139,7 @@ fileprivate class PlainRequest {
                 responseRawBody = String(data: data, encoding: .utf8) ?? "Empty!!!"
             }
             
-            Self.log(url, endpoint, response, responseRawBody)
+            Self.log(url!, endpoint, response, responseRawBody)
             
             switch response.statusCode {
             case 200...299:
