@@ -8,5 +8,5 @@
 import Foundation
 
 public struct AnyResponseModel: Decodable {
-  let data: String?
+  public let data: String?
 }
