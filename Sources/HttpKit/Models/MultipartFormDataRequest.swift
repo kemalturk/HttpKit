@@ -32,7 +32,8 @@ struct MultipartFormDataRequest {
     fieldString += "Content-Type: text/plain; charset=ISO-8859-1\r\n"
     fieldString += "Content-Transfer-Encoding: 8bit\r\n"
     fieldString += "\r\n"
-    fieldString += "\(value)\r\n"
+    fieldString += value
+    fieldString += "\r\n"
     
     return fieldString
   }
