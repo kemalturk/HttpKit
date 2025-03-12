@@ -9,6 +9,7 @@ import Foundation
 
 
 public extension Endpoint {
+    var urlSession: URLSession { URLSession.shared }
     var url: URL? { nil }
     var scheme: String { "https" }
     var contentType: ContentType { .json }

@@ -69,6 +69,7 @@ fileprivate class PlainRequest {
     private var task: URLSessionTask?
     
     func start(endpoint: Endpoint, continuation: CheckedContinuation<Result<Data, RequestError>, Never>) {
+        let urlSession = endpoint.urlSession
         var url = endpoint.url
         
         if url == nil {
@@ -120,7 +121,7 @@ fileprivate class PlainRequest {
             multipartFormDataRequest.bindToRequest(&request)
         }
         
-        task = URLSession.shared.dataTask(with: request) { data, response, error in
+        task = urlSession.dataTask(with: request) { data, response, error in
             var result: Result<Data, RequestError> = .failure(.unknown)
             defer {
                 continuation.resume(returning: result)

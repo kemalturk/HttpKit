@@ -9,6 +9,9 @@ import Foundation
 
 
 public protocol Endpoint {
+    
+    var urlSession: URLSession { get }
+    
     var url: URL? { get }
     var scheme: String { get }
     var host: String { get }
@@ -23,6 +26,7 @@ public protocol Endpoint {
     
     /// This timeout interval is measured in seconds.
     var timeout: TimeInterval { get }
+    
 }
 
 public enum FormData {
