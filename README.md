@@ -15,7 +15,7 @@ To start using HttpKit in your Swift project, follow these installation instruct
 You can easily add HttpKit to your project by adding it as a dependency in your<br>
 Package.swift file:
 ```swift
-.package(url: "https://github.com/kemalturk/HttpKit.git", .upToNextMajor(from: "1.0.0"))
+.package(url: "https://github.com/kemalturk/HttpKit.git", .upToNextMajor(from: "2.0.0"))
 ```
 
 ### 2. Import HttpKit:
